@@ -1,0 +1,28 @@
+diff --git a/server/src/main/java/org/elasticsearch/bootstrap/BootstrapChecks.java b/server/src/main/java/org/elasticsearch/bootstrap/BootstrapChecks.java
+index 5aca3a1a25ad..5fb407ee3d0e 100644
+--- a/server/src/main/java/org/elasticsearch/bootstrap/BootstrapChecks.java
++++ b/server/src/main/java/org/elasticsearch/bootstrap/BootstrapChecks.java
+@@ -419,22 +419,8 @@ final class BootstrapChecks {
+ 
+         @Override
+         public BootstrapCheckResult check(final BootstrapContext context) {
+-            // we only enforce the check if a store is allowed to use mmap at all
+-            if (IndexModule.NODE_STORE_ALLOW_MMAP.get(context.settings())) {
+-                if (getMaxMapCount() != -1 && getMaxMapCount() < LIMIT) {
+-                    final String message = String.format(
+-                        Locale.ROOT,
+-                        "max virtual memory areas vm.max_map_count [%d] is too low, increase to at least [%d]",
+-                        getMaxMapCount(),
+-                        LIMIT
+-                    );
+-                    return BootstrapCheckResult.failure(message);
+-                } else {
+-                    return BootstrapCheckResult.success();
+-                }
+-            } else {
++                //we are disabling this for zCX support
+                 return BootstrapCheckResult.success();
+-            }
+         }
+ 
+         // visible for testing
